@@ -26,7 +26,7 @@ end
 # Function to create a matrix of nodes
 function maze(height::Int, width::Int)::Matrix{Node}
     @assert height * width >= 1
-    possible_keys = shuffle!(collect(-99:99))
+    possible_keys = shuffle!(collect(-10000:10000))
     mat = Matrix{Node}(undef, height, width)
     idx = 1
     for n in 1:height
@@ -57,14 +57,8 @@ function neighbours_in_matrix(mat::Matrix{Node}, i::Int, j::Int)::Vector{Tuple{I
     return neighbours
 end
 
-#= 
-Ich habe Output der random_stack Funktion geändert, sodass man in dieser Funktion schon Start und Ende
-des Labyrinths definieren kann. Das brauchen wir für die Visualisierung. Wenn man Labyrinth ohne Start und Ausgang des
-Labyrinths visualisieren möchte, dann einfach random_stack(A)[1] nehmen. Wenn die random_stack-Funktion so geändert 
-wird, muss man auch MazeViz-Struct dementsprechend ändern, sonst können Start und Ziel nicht visualisiert werden. Ich
-habe etwas in der Datei visualize geschrieben
-=#
-function random_stack(mat::Matrix{Node})::Tuple{Matrix{Node},Node,Node}
+# Function to perform randomized depth-first search
+function random_stack(mat::Matrix{Node})::Matrix{Node}
     @assert (size(mat)[1] > 1 && size(mat)[2] > 1)
     root = rand(mat)
     root_idx = Tuple(findfirst(x -> x.key === root.key, mat))
@@ -100,7 +94,5 @@ function random_stack(mat::Matrix{Node})::Tuple{Matrix{Node},Node,Node}
         end
     end
 
-    return mat,rand(mat),rand(mat)
+    return mat
 end
-
-
