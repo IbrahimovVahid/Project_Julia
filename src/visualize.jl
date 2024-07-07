@@ -1,4 +1,3 @@
-
 struct MazeViz
     mat::Matrix{Node}
     path::Vector{Node}
@@ -99,3 +98,4 @@ function Base.show(io::IO, mat::Matrix{Node}, path::Vector{Node})
     viz = MazeViz(mat, path)
     show(io, viz)
 end
+
